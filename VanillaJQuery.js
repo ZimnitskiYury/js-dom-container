@@ -19,7 +19,12 @@ class VanillaJQuery {
       return this;
     };
     //  children(element) {},
-    //  empty() {},
+    this.empty = function empty() {
+      while (this.node.firstChild) {
+        this.node.removeChild(this.node.firstChild);
+      }
+      return this;
+    };
     this.css = function css(property, value) {
       if (property instanceof Map) {
         property.forEach((val, key) => {
@@ -38,6 +43,7 @@ class VanillaJQuery {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 function $(selector) {
   const node = document.querySelector(selector);
   return new VanillaJQuery(node);
