@@ -18,7 +18,10 @@ class VanillaJQuery {
       this.node.setAttribute(name, value);
       return this;
     };
-    //  children(element) {},
+    this.children = function children() {
+      this.node = this.node.children;
+      return this;
+    };
     this.empty = function empty() {
       while (this.node.firstChild) {
         this.node.removeChild(this.node.firstChild);
