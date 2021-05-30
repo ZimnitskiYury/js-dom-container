@@ -43,9 +43,14 @@ class VanillaJQuery {
   }
 
   remove() {
-    this.node.remove();
+    if (this.isNodeList()) {
+      this.node.forEach((x) => x.remove());
+    } else {
+      this.node.remove();
+    }
   }
 
+  // ToDo: add multiple arguments ...strings
   text(string) {
     if (string === undefined) {
       if (this.isNodeList()) {
@@ -74,6 +79,10 @@ class VanillaJQuery {
   }
 
   attr(name, value) {
+    if (this.isNodeList()) {
+      this.node.forEach((x) => x.setAttribute(name, value));
+      return this;
+    }
     this.node.setAttribute(name, value);
     return this;
   }
