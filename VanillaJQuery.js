@@ -23,8 +23,13 @@ class VanillaJQuery {
     return this;
   }
 
-  removeClass(className) {
-    this.node.classList.remove(className);
+  // ToDo: Split string by space separator 'myClass-1 myClass-2'
+  removeClass(...classNames) {
+    if (this.node instanceof NodeList) {
+      this.node.forEach((x) => x.classList.remove(...classNames));
+      return this;
+    }
+    this.node.classList.remove(...classNames);
     return this;
   }
 
