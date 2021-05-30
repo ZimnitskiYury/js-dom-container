@@ -93,6 +93,14 @@ class VanillaJQuery {
   }
 
   empty() {
+    if (this.isNodeList()) {
+      this.node.forEach((x) => {
+        while (x.firstChild) {
+          x.removeChild(x.firstChild);
+        }
+      });
+      return this;
+    }
     while (this.node.firstChild) {
       this.node.removeChild(this.node.firstChild);
     }
