@@ -3,6 +3,10 @@ class VanillaJQuery {
     this.node = node;
   }
 
+  isNodeList() {
+    return (this.node instanceof NodeList);
+  }
+
   first() {
     this.node = this.node.item(0);
     return this;
@@ -15,7 +19,7 @@ class VanillaJQuery {
 
   // ToDo: Split string by space separator 'myClass-1 myClass-2'
   addClass(...classNames) {
-    if (this.node instanceof NodeList) {
+    if (this.isNodeList()) {
       this.node.forEach((x) => x.classList.add(...classNames));
       return this;
     }
@@ -25,7 +29,7 @@ class VanillaJQuery {
 
   // ToDo: Split string by space separator 'myClass-1 myClass-2'
   removeClass(...classNames) {
-    if (this.node instanceof NodeList) {
+    if (this.isNodeList()) {
       this.node.forEach((x) => x.classList.remove(...classNames));
       return this;
     }
@@ -42,8 +46,31 @@ class VanillaJQuery {
     this.node.remove();
   }
 
-  text() {
-    return this.node.innerText;
+  text(string) {
+    if (string === undefined) {
+      if (this.isNodeList()) {
+        let text = '';
+        this.node.forEach((x) => {
+          if (text) {
+            text += ` ${x.innerText}`;
+          } else {
+            text += x.innerText;
+          }
+        });
+        return text;
+      }
+      return this.node.innerText;
+    }
+
+    if (this.isNodeList()) {
+      this.node.forEach((x) => {
+        // eslint-disable-next-line no-param-reassign
+        x.innerText += string;
+      });
+      return this;
+    }
+    this.node.innerText += string;
+    return this;
   }
 
   attr(name, value) {
