@@ -13,12 +13,13 @@ class VanillaJQuery {
     return this;
   }
 
-  addClass(className) {
+  // ToDo: Split string by space separator 'myClass-1 myClass-2'
+  addClass(...classNames) {
     if (this.node instanceof NodeList) {
-      this.node.forEach((x) => x.classList.add(className));
+      this.node.forEach((x) => x.classList.add(...classNames));
       return this;
     }
-    this.node.classList.add(className);
+    this.node.classList.add(...classNames);
     return this;
   }
 
