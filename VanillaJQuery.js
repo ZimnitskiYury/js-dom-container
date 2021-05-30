@@ -9,8 +9,13 @@ class VanillaJQuery {
       this.node.classList.remove(className);
       return this;
     };
-    //  append(element) {},
-    //  remove(element) {},
+    this.append = function append(element) {
+      this.node.append(element);
+      return this;
+    };
+    this.remove = function remove() {
+      this.node.remove();
+    };
     this.text = function text() {
       return this.node.innerText;
     };
