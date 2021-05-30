@@ -3,7 +3,21 @@ class VanillaJQuery {
     this.node = node;
   }
 
+  first() {
+    this.node = this.node.item(0);
+    return this;
+  }
+
+  last() {
+    this.node = this.node.item(this.node.length - 1);
+    return this;
+  }
+
   addClass(className) {
+    if (this.node instanceof NodeList) {
+      this.node.forEach((x) => x.classList.add(className));
+      return this;
+    }
     this.node.classList.add(className);
     return this;
   }
@@ -69,6 +83,6 @@ class VanillaJQuery {
 
 // eslint-disable-next-line no-unused-vars
 function $(selector) {
-  const node = document.querySelector(selector);
+  const node = document.querySelectorAll(selector);
   return new VanillaJQuery(node);
 }
