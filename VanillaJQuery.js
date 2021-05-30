@@ -42,7 +42,13 @@ class VanillaJQuery {
       }
       return this;
     };
-    //  click() {},
+    this.click = function click(callback) {
+      if (typeof callback !== 'function') {
+        return this;
+      }
+      this.node.addEventListener('click', callback);
+      return this;
+    };
   }
 }
 
