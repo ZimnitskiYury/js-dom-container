@@ -37,7 +37,12 @@ class VanillaJQuery {
     return this;
   }
 
+  // ToDo: test this
   append(element) {
+    if (this.isNodeList()) {
+      this.node.forEach((x) => x.append(element));
+      return this;
+    }
     this.node.append(element);
     return this;
   }
@@ -87,6 +92,7 @@ class VanillaJQuery {
     return this;
   }
 
+  // ToDo: need to add work with Nodelist
   children() {
     this.node = this.node.children;
     return this;
@@ -143,6 +149,7 @@ class VanillaJQuery {
     return this;
   }
 
+  // ToDo: need to add work with Nodelist
   click(callback) {
     if (typeof callback !== 'function') {
       return this;
