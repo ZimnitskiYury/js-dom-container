@@ -108,17 +108,38 @@ class VanillaJQuery {
   }
 
   css(property, value) {
-    if (property instanceof Map) {
-      property.forEach((val, key) => {
-        this.node.style[key] = val;
-      });
-    } else {
-      if (value === undefined) {
-        const computedStyle = getComputedStyle(this.node);
-        return computedStyle[property];
+    function setCss(node) {
+      if (property instanceof Map) {
+        // eslint-disable-next-line no-param-reassign
+        property.forEach((val, key) => { node.style[key] = val; });
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        node.style[property] = value;
       }
-      this.node.style[property] = value;
     }
+
+    function getCss(node) {
+      const computedStyle = getComputedStyle(node);
+      return computedStyle[property];
+    }
+
+    if (this.isNodeList()) {
+      const array = [];
+      this.node.forEach((x) => {
+        if (value === undefined && !(property instanceof Map)) {
+          array.push(getCss(x));
+        }
+        setCss(x);
+      });
+      if (Array.length === 0) {
+        return this;
+      }
+      return array;
+    }
+    if (value === undefined && !(property instanceof Map)) {
+      return getCss(this.node);
+    }
+    setCss(this.node);
     return this;
   }
 
